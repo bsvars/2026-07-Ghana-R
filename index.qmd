@@ -1,0 +1,652 @@
+---
+title: "" 
+author: ""
+email: "tomasz.wozniak@unimelb.edu.au"
+title-slide-attributes:
+  data-background-color: "#1614B1"
+number-sections: false
+format: 
+  revealjs: 
+    theme: [simple, theme.scss]
+    slide-number: c
+    transition: concave
+    smaller: true
+    multiplex: true
+execute: 
+  echo: true
+---
+
+
+
+##  {background-color="#1614B1"}
+
+### Forecasting Labour Market Outcomes Using
+
+### Bayesian Panel Vector Autoregressions
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+### Tomasz Woźniak {style="color:#1A003F;"}
+
+![](bpvars.png){.absolute top=275 right=75 width="300"}
+
+
+
+
+## Coming up next  {background-color="#1614B1"}
+
+$$ $$
+
+### modelling and forecasting framework {style="color:#1A003F;"}
+
+### the R package [bpvars](https://bsvars.org/bpvars) {style="color:#1A003F;"}
+
+<!-- ### roadmap {style="color:#1A003F;"} -->
+
+
+
+## Materials {background-color="#1614B1"} 
+
+$$ $$
+
+### Presentation Slides [as a website](https://bsvars.org/2026-03-bpvars-ilo/) {style="color:#1A003F;"}
+
+### GitHub [repo](https://github.com/bsvars/2026-03-bpvars-ilo) to reproduce the slides and results{style="color:#1A003F;"}
+
+### **bpvars** [website](https://bsvars.org/bpvars) and [CRAN](https://cran.r-project.org/package=bpvars) profile {style="color:#1A003F;"}
+
+### [vignette](https://github.com/bsvars/2026-03-bpvars-ilo/blob/5be79db41ba1e6eaa8b5ded34482421c25b4c167/resources/bpvars.pdf), [tutorial](https://github.com/bsvars/2026-03-bpvars-ilo/blob/5be79db41ba1e6eaa8b5ded34482421c25b4c167/resources/ilo_tutorial.pdf) and [manual](https://cloud.r-project.org/web/packages/bpvars/bpvars.pdf) {style="color:#1A003F;"}
+
+### [bsvars.org](https://bsvars.org/) website {style="color:#1A003F;"}
+
+
+
+
+
+
+
+
+##  {background-color="#1614B1"} 
+
+![](ilo_logo.svg){.absolute top=20 right=650 width="400"}
+$$ $$
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+$$ $$
+
+#### This research was funded by the International Labour Organization.
+
+#### The [**bpvars**](https://bsvars.org/bpvars) package, vignette, and other outputs are copyrighted by the ILO. 
+
+#### Thank you!
+
+
+
+
+
+
+## modelling and forecasting framework {background-color="#1614B1"}
+
+
+## modelling and forecasting framework
+
+### characterisation {style="color:#1A003F;"}
+
+- contemporary Bayesian modelling and institutional
+setup
+- incorporates best knowledge and practices
+- a balance between model size, flexibility, and its
+capacity to extract signal from data
+- highly computational, application-specific modelling
+- inspirations: UN, IPCC, ECB, FED, Christopher Sims
+
+
+
+
+
+
+
+## modelling and forecasting framework
+
+### data {style="color:#1A003F;"}
+
+- annual country-level time series
+- $\begin{bmatrix} gdp_{c.t} & UR_{c.t} & EPR_{c.t} & LFPR_{c.t} \end{bmatrix}$
+- sampling period 1991-2024
+- 189 countries
+<!-- - 34.4% missing observations -->
+
+
+
+
+## modelling and forecasting framework
+
+### data {style="color:#1A003F;"}
+
+```{r}
+#| label: data
+#| cache: true
+#| warning: false
+#| message: false
+#| echo: false
+
+library(bpvars)
+
+ligh = "#5A58FF"
+# ligh = "#2A28C4"
+dark = "#1A003F"
+
+C = length(ilo_dynamic_panel)
+id_usa = which(names(ilo_dynamic_panel) == "USA")
+id_pol = which(names(ilo_dynamic_panel) == "COL")
+time_id = zoo::index(ilo_dynamic_panel[[id_usa]])
+var_names = colnames(ilo_dynamic_panel[[id_usa]])
+
+par(
+  mfrow = c(2, 2),
+  mar = c(0.5, 0.5, 0.5, 0.5),
+  oma = c(2, 2, 2, 2)
+)
+for (n in 1:4) {
+  range_i = range(sapply(1:C, \(i)(range(ilo_dynamic_panel[[i]][,n]))))
+  plot.ts(
+    ilo_dynamic_panel[[id_usa]][,n], 
+    ylim = range_i, 
+    col = ligh, 
+    lwd = 0.2,
+    axes = FALSE,
+    ylab = "",
+    xlab = ""
+  )
+  for (i in (1:C)[-id_usa]) {lines(ilo_dynamic_panel[[i]][,n], col = ligh, lwd = 0.2)}
+  lines(ilo_dynamic_panel[[id_pol]][,n], col = dark, lwd = 2)
+  if (n == 1) {
+    text(
+      time_id[4],
+      ilo_dynamic_panel[[id_pol]][34,n],
+      "COL",
+      col = dark,
+    cex = 2
+    )
+  }
+  text(
+    time_id[31],
+    range_i[2] - 0.1 * diff(range_i),
+    var_names[n],
+    col = dark,
+    cex = 2
+  )
+  if (n == 3 || n == 4) {
+    axis(
+      1,
+      labels = c(NA, seq(from = 1995, to = 2020, by = 5), NA),
+      at = c(1991, seq(from = 1995, to = 2020, by = 5), 2024),
+    )
+  }
+}
+```
+
+
+<!-- ## modelling and forecasting framework -->
+
+<!-- ### missing data {style="color:#1A003F;"} -->
+
+<!-- ```{r} -->
+<!-- #| label: missingdata -->
+<!-- #| cache: true -->
+<!-- #| warning: false -->
+<!-- #| message: false -->
+<!-- #| echo: false -->
+
+
+<!-- par( -->
+<!--   mfrow = c(2, 2), -->
+<!--   mar = c(0.5, 0.5, 0.5, 0.5), -->
+<!--   oma = c(2, 2, 2, 2) -->
+<!-- ) -->
+<!-- for (n in 1:4) { -->
+<!--   range_i = range(sapply(1:C, \(i)(range(ilo_dynamic_panel[[i]][,n])))) -->
+<!--   plot.ts( -->
+<!--     ilo_dynamic_panel_missing[[id_usa]][,n],  -->
+<!--     ylim = range_i,  -->
+<!--     col = ligh,  -->
+<!--     lwd = 0.2, -->
+<!--     axes = FALSE, -->
+<!--     ylab = "", -->
+<!--     xlab = "" -->
+<!--   ) -->
+<!--   for (i in (1:C)[-id_usa]) {lines(ilo_dynamic_panel_missing[[i]][,n], col = ligh, lwd = 0.2)} -->
+<!--   lines(ilo_dynamic_panel_missing[[id_pol]][,n], col = dark, lwd = 2) -->
+<!--   if (n == 1) { -->
+<!--     text( -->
+<!--       time_id[4], -->
+<!--       ilo_dynamic_panel[[id_pol]][34,n], -->
+<!--       "COL", -->
+<!--       col = dark, -->
+<!--       cex = 2 -->
+<!--     ) -->
+<!--   } -->
+<!--   text( -->
+<!--     time_id[31], -->
+<!--     range_i[2] - 0.1 * diff(range_i), -->
+<!--     var_names[n], -->
+<!--     col = dark, -->
+<!--     cex = 2 -->
+<!--   ) -->
+<!--   if (n == 3 || n == 4) { -->
+<!--     axis( -->
+<!--       1, -->
+<!--       labels = c(NA, seq(from = 1995, to = 2020, by = 5), NA), -->
+<!--       at = c(1991, seq(from = 1995, to = 2020, by = 5), 2024), -->
+<!--     ) -->
+<!--   } -->
+<!-- } -->
+<!-- ``` -->
+
+
+
+
+
+
+
+
+## modelling and forecasting framework
+
+### modelling features {style="color:#1A003F;"}
+
+- Bayesian nonstationary variables handling
+- system modelling
+- dynamic approach
+- <span style="color:#1614B1;">country-specific vector autoregression</span>
+- <span style="color:#1614B1;">global vector autoregression for prior mean</span>
+- hierarchical modelling
+- model-coherent missing observation handling
+- parameter grouping
+- parameter estimation risk accountability
+
+
+
+
+
+
+## modelling and forecasting framework
+
+### country-specific vector autoregression {style="color:#1A003F;"}
+
+\begin{align}
+&\\
+		\mathbf{y}_{c.t} &= \mathbf{A}_{c.1} \mathbf{y}_{c.t-1} + \mathbf{A}_{d.c}\mathbf{x}_{c.t} + \boldsymbol\epsilon_{c.t}\\[1ex]
+		\boldsymbol\epsilon_{c.t}\mid \mathbf{y}_{c.t-1} & \sim N_4\left(\mathbf{0}_4, \boldsymbol\Sigma_c\right)\\[2ex]
+\end{align}		
+		
+- subscript $c$ is for country, and $t$ is for time
+- captures country-specific dynamics, uncertainty and heterogeneity
+- parameters $\mathbf{A}_{c.1}$, $\mathbf{A}_{d.c}$ and $\boldsymbol\Sigma_c$ are estimated
+
+
+
+
+
+## modelling and forecasting framework
+
+### global model for the prior mean {style="color:#1A003F;"}
+
+- prior expectations are parameters
+
+\begin{align}
+		E_\pi\left[\mathbf{A}_{c}\right] &= \mathbf{A}, \qquad \mathbf{A}_{c} = \begin{bmatrix} \mathbf{A}_{c.1} & \mathbf{A}_{d.c} \end{bmatrix}'\\[1ex]
+		E_\pi\left[\boldsymbol\Sigma_c\right] &= \boldsymbol\Sigma\\
+\end{align}
+		
+- a global model under the prior mean
+
+\begin{align}
+		\mathbf{y}_{c.t} &= \mathbf{A}_{1} \mathbf{y}_{c.t-1} + \mathbf{A}_{d}\mathbf{x}_{c.t} + \boldsymbol\epsilon_{c.t}\\[1ex]
+		\boldsymbol\epsilon_{c.t}\mid \mathbf{y}_{c.t-1} & \sim N_4\left(\mathbf{0}_4, \boldsymbol\Sigma\right)
+\end{align}
+
+- parameters $\mathbf{A}_{1}$, $\mathbf{A}_{d}$ and $\boldsymbol\Sigma$ are estimated
+- panel data efficiency gains and interpretations
+
+
+
+
+
+## modelling and forecasting framework
+
+### group modelling {style="color:#1A003F;"}
+
+- let each country be assigned to a group $g\in\{1,\dots,G\}$
+- country grouping
+\begin{align}
+		\mathbf{y}_{c.t} &= \mathbf{A}_{g.1} \mathbf{y}_{c.t-1} + \mathbf{A}_{d.g}\mathbf{x}_{c.t} + \boldsymbol\epsilon_{c.t}, \qquad \boldsymbol\epsilon_{c.t}\mid \mathbf{y}_{c.t-1} \sim N_4\left(\mathbf{0}_4, \boldsymbol\Sigma_g\right)\\[2ex]
+\end{align}		
+
+- global prior grouping
+
+\begin{align}
+		E_\pi\left[\mathbf{A}_{c}\right] &= \mathbf{A}_g, \qquad E_\pi\left[\boldsymbol\Sigma_c\right] = \boldsymbol\Sigma_g\\
+\end{align}
+		
+- pre-specified or estimated group membership
+
+
+
+
+
+
+## modelling and forecasting framework
+
+### featured models {style="color:#1A003F;"}
+
+- country-specific VARs with global prior
+- country-specific VARs with global prior by [Jarociński (2010, JAE)](https://doi.org/10.1002/jae.1082)
+- country-grouping VARs with global prior (fixed or estimated groupings)
+- country-specific VARs with global prior grouping (fixed or estimated groupings)
+- country-specific VARs
+
+### featured model specifications {style="color:#1A003F;"}
+
+- VAR lag order modification
+- exogenous variables
+- constrained forecasting of rates
+- prior hyper-parameters adjustment
+- global prior mean set to pooled estimator by [Zellner, Hong (1989, JOE)](https://doi.org/10.1016/0304-4076(89)90036-5)
+
+
+
+
+
+## modelling and forecasting framework
+
+### forecasting features {style="color:#1A003F;"}
+
+- original non-stationary variables
+- point and density forecasting
+- forecasting for models with exogenous variables
+- restricted forecasting of rates
+- marginal forecasts of labour market indicators
+- expanding-window recursive forecasting
+- forecast performance evaluation 
+- forecast error variance decomposition
+
+
+
+
+
+## modelling and forecasting framework
+
+### one-period-ahead conditional predictive density {style="color:#1A003F;"}
+
+\begin{align}
+&\\
+		{\color{lig}p\left(\mathbf{y}_{c.t+1}\mid \mathbf{y}_{c.t},\mathbf{A}_{c},\boldsymbol\Sigma_c\right)} & = N_4\left(\mathbf{A}_{c.1} \mathbf{y}_{c.t} + \mathbf{A}_{d.c}\mathbf{x}_{c.t+1}, \boldsymbol\Sigma_c\right)\\[5ex]
+\end{align}
+		
+- implied by the model
+- equivalent to the frequentist predictive density
+
+### joint predictive density {style="color:#1A003F;"}
+
+\begin{align}
+		p\left(\mathbf{y}_{c.t+h},\dots,\mathbf{y}_{c.t+1}\mid \mathbf{Y}_{c.t}\right)
+		&= \int p\left(\mathbf{y}_{c.t+h},\dots,\mathbf{y}_{c.t+1},\mathbf{A}_{c},\boldsymbol\Sigma_c\mid \mathbf{Y}_{c.t}\right)d\left(\mathbf{A}_{c},\boldsymbol\Sigma_c\right)
+\end{align}
+
+- accounts for parameter uncertainty
+- used to generate forecast summaries
+
+
+
+
+
+<!-- ## the model -->
+
+<!-- ### missing observation handling {style="color:#1A003F;"} -->
+
+<!-- - derived model-coherent joint density of missing observations $\mathbf{y}_{c.m}$ given observed data $\mathbf{y}_{c.o}$ and parameters $\mathbf{A}_{c},\boldsymbol\Sigma_c$ -->
+
+<!-- \begin{align} -->
+<!-- 		p\left(\mathbf{y}_{c.m}\mid \mathbf{y}_{c.o},\mathbf{A}_{c},\boldsymbol\Sigma_c\right) -->
+<!-- \end{align} -->
+
+<!-- - based on model's likelihood function -->
+<!-- - sampled like other parameters during estimation -->
+<!-- - parameter estimation and forecasting embed uncertainty about missing observations -->
+
+
+
+
+
+
+
+
+## the R package [bpvars](https://bsvars.org/bpvars) {background-color="#1614B1"}
+
+
+## the R package [bpvars](https://bsvars.org/bpvars)
+
+### features {style="color:#1A003F;"}
+
+- precise estimation and forecasting
+- simple workflows in **R**
+- excellent computational speed
+  - frontier econometric and numerical techniques
+  - algorithms written in **C++**
+- extensive documentation
+- meeting all CRAN standards
+- to install the package run
+```r
+install.packages("bpvars")
+```
+- upload it in **R** using
+```r
+library(bpvars)
+```
+
+
+
+## the R package [bpvars](https://bsvars.org/bpvars)
+
+![](cran.png){.absolute top=100 right=250 width="600"}
+
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### inspect the data {style="color:#1A003F;"}
+
+```{r}
+#| label: data_col
+#| cache: true
+#| warning: false
+
+library(bpvars)                                   # load the package
+tail(ilo_dynamic_panel$COL, 8)                    # inspect Colombian data
+
+```
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### specify and estimate the model {style="color:#1A003F;"}
+
+```{r}
+#| label: spec
+#| cache: true
+#| warning: false
+
+spec = specify_bvarPANEL$new(                           # specify the model
+  ilo_dynamic_panel,                                    # data
+  exogenous = ilo_exogenous_variables                   # exogenous variables
+)
+
+burn = estimate(spec, S = 5000, show_progress = FALSE) # run the burn-in
+post = estimate(burn, S = 5000)                        # estimate the model
+
+```
+
+
+
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### forecast labour market outcomes {style="color:#1A003F;"}
+
+```{r}
+#| label: for
+#| cache: true
+#| warning: false
+
+fore = forecast(                                    # forecast the model
+  post,                                             # estimation output
+  horizon = 5,                                      # forecast horizon
+  exogenous_forecast = ilo_exogenous_forecasts,     # forecasts for exogenous variables
+) 
+plot(fore, "COL", main = "Forecasts for Colombia")  # plot the forecasts
+```
+
+
+
+
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### report the forecasts {style="color:#1A003F;"}
+
+```{r}
+#| label: fore_summary
+#| cache: true
+#| warning: false
+ 
+summ = summary(fore, "COL")                       # compute forecast summaries
+summ$variable2                                    # report forecasts for UR
+
+```
+
+
+
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### forecast error variance decomposition {style="color:#1A003F;"}
+
+```{r}
+#| label: fevd
+#| cache: true
+#| warning: false
+
+post |>                                              # estimation output
+  compute_variance_decompositions(horizon = 5) |>    # compute variance decompositions
+  plot(which_c = "COL")                              # plot variance decompositions 
+```
+
+
+
+
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### forecast performance evaluation {style="color:#1A003F;"}
+
+```{r}
+#| label: fpe1
+#| cache: true
+#| warning: false
+
+# Benchmark model
+spec = specify_bvarPANEL$new(ilo_dynamic_panel)   # specify the model
+poos = specify_poosf_exercise$new(                # specify forecasting exercise
+          spec,
+          S = 1000,
+          S_burn = 1000,
+          horizons = 1,
+          training_sample = 30
+)
+fore = forecast_poos_recursively(spec, poos)      # run the forecasting exercise 
+fper = compute_forecast_performance(fore)         # compute performance metrics 
+```
+
+
+
+
+
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### forecast performance evaluation {style="color:#1A003F;"}
+
+```{r}
+#| label: fpe_g
+#| cache: true
+#| warning: false
+
+# Model with country-grouping
+spec_g = specify_bvarGroupPANEL$new(                # specify the model
+          ilo_dynamic_panel,
+          group_allocation = country_grouping_region
+)
+poos_g = specify_poosf_exercise$new(                # specify forecasting exercise
+          spec_g,
+          S = 1000,
+          S_burn = 1000,
+          horizons = 1,
+          training_sample = 30
+)
+fore_g = forecast_poos_recursively(spec_g, poos_g)  # run the forecasting exercise 
+fper_g = compute_forecast_performance(fore_g)       # compute performance metrics 
+```
+
+
+
+
+## the R package [bpvars](https://github.com/bsvars/bpvars)
+
+### forecast performance evaluation {style="color:#1A003F;"}
+
+```{r}
+#| label: fpe_com
+#| cache: true
+#| warning: false
+
+# density forecast performance comparison
+cbind(fper$PLS$Global, fper_g$PLS$Global)
+
+# point forecast performance comparison
+cbind(fper$RMSFE$Global, fper_g$RMSFE$Global)
+
+```
+
+
+
+
+
+
+##  {background-color="#1614B1"}
+
+![](social_ilo.png){.absolute top=80 right=50 width="900"}
+
