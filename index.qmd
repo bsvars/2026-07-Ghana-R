@@ -444,6 +444,8 @@ library(bpvars)
 #| warning: false
 
 library(bpvars)                                   # load the package
+class(ilo_dynamic_panel)                          # input data is a list
+names(ilo_dynamic_panel)[1:72]                    # including multivariate time series for 189 countries
 tail(ilo_dynamic_panel$GHA, 8)                    # inspect Ghanian data
 
 ```
