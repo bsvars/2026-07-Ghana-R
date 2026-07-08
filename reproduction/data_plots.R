@@ -8,7 +8,7 @@ dark = "#1A003F"
 
 C = length(ilo_dynamic_panel)
 id_usa = which(names(ilo_dynamic_panel) == "USA")
-id_pol = which(names(ilo_dynamic_panel) == "POL")
+id_pol = which(names(ilo_dynamic_panel) == "GHA")
 time_id = zoo::index(ilo_dynamic_panel[[id_usa]])
 var_names = colnames(ilo_dynamic_panel[[id_usa]])
 
@@ -38,7 +38,7 @@ for (n in 1:4) {
     text(
       time_id[3],
       ilo_dynamic_panel[[id_pol]][34,n],
-      "POL",
+      "GHA",
       col = dark
     )
   }
@@ -83,7 +83,7 @@ for (n in 1:4) {
     text(
       time_id[3],
       ilo_dynamic_panel[[id_pol]][34,n],
-      "POL",
+      "GHA",
       col = dark
     )
   }
