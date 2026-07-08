@@ -195,8 +195,8 @@
 
 <section id="section" class="slide level2" data-background-color="#1614B1">
 <h2></h2>
-<h3 id="forecasting-labour-market-outcomes-using">Forecasting Labour Market Outcomes Using</h3>
-<h3 id="bayesian-panel-vector-autoregressions">Bayesian Panel Vector Autoregressions</h3>
+<h3 id="forecasting-labour-market-indicators">Forecasting Labour Market Indicators</h3>
+<h3 id="using-the-r-package-bpvars">Using the R Package bpvars</h3>
 <p><span class="math display">\[ \]</span></p>
 <p><span class="math display">\[ \]</span></p>
 <p><span class="math display">\[ \]</span></p>
@@ -216,10 +216,10 @@
 <section id="materials" class="slide level2" data-background-color="#1614B1">
 <h2>Materials</h2>
 <p><span class="math display">\[ \]</span></p>
-<h3 style="color:#1A003F;" id="presentation-slides-as-a-website">Presentation Slides <a href="https://bsvars.org/2026-03-bpvars-ilo/">as a website</a></h3>
-<h3 style="color:#1A003F;" id="github-repo-to-reproduce-the-slides-and-results">GitHub <a href="https://github.com/bsvars/2026-03-bpvars-ilo">repo</a> to reproduce the slides and results</h3>
+<h3 style="color:#1A003F;" id="presentation-slides-as-a-website">Presentation Slides <a href="https://bsvars.org/2026-07-Ghana-R/">as a website</a></h3>
+<h3 style="color:#1A003F;" id="github-repo-to-reproduce-the-slides-and-results">GitHub <a href="https://github.com/bsvars/2026-07-Ghana-R">repo</a> to reproduce the slides and results</h3>
 <h3 style="color:#1A003F;" id="bpvars-website-and-cran-profile"><strong>bpvars</strong> <a href="https://bsvars.org/bpvars">website</a> and <a href="https://cran.r-project.org/package=bpvars">CRAN</a> profile</h3>
-<h3 style="color:#1A003F;" id="vignette-tutorial-and-manual"><a href="https://github.com/bsvars/2026-03-bpvars-ilo/blob/5be79db41ba1e6eaa8b5ded34482421c25b4c167/resources/bpvars.pdf">vignette</a>, <a href="https://github.com/bsvars/2026-03-bpvars-ilo/blob/5be79db41ba1e6eaa8b5ded34482421c25b4c167/resources/ilo_tutorial.pdf">tutorial</a> and <a href="https://cloud.r-project.org/web/packages/bpvars/bpvars.pdf">manual</a></h3>
+<h3 style="color:#1A003F;" id="vignette-and-manual"><a href="https://arxiv.org/abs/2606.14143">vignette</a> and <a href="https://cloud.r-project.org/web/packages/bpvars/bpvars.pdf">manual</a></h3>
 <h3 style="color:#1A003F;" id="bsvars.org-website"><a href="https://bsvars.org/">bsvars.org</a> website</h3>
 </section>
 <section id="section-1" class="slide level2" data-background-color="#1614B1">
@@ -232,13 +232,28 @@
 <p><span class="math display">\[ \]</span></p>
 <p><span class="math display">\[ \]</span></p>
 <h4 id="this-research-was-funded-by-the-international-labour-organization.">This research was funded by the International Labour Organization.</h4>
-<h4 id="the-bpvars-package-vignette-and-other-outputs-are-copyrighted-by-the-ilo.">The <a href="https://bsvars.org/bpvars"><strong>bpvars</strong></a> package, vignette, and other outputs are copyrighted by the ILO.</h4>
+<h4 id="the-bpvars-package-vignette-and-other-outputs-are-copyrighted-by-the-ilo.">The <a href="https://bsvars.org/bpvars"><strong>bpvars</strong></a> package, vignette, and other outputs are copyrighted by the <a href="https://www.ilo.org/">ILO</a>.</h4>
 <h4 id="thank-you">Thank you!</h4>
 </section>
 <section id="modelling-and-forecasting-framework-1" class="slide level2" data-background-color="#1614B1">
 <h2>modelling and forecasting framework</h2>
 </section>
 <section id="modelling-and-forecasting-framework-2" class="slide level2">
+<h2>modelling and forecasting framework</h2>
+<h3 style="color:#1A003F;" id="data">data</h3>
+<ul>
+<li>annual country-level time series</li>
+<li><span class="math inline">\(\begin{bmatrix} gdp_{c.t} &amp; UR_{c.t} &amp; EPR_{c.t} &amp; LFPR_{c.t} \end{bmatrix}\)</span></li>
+<li>sampling period 1991-2024</li>
+<li>189 countries <!-- - 34.4% missing observations --></li>
+</ul>
+</section>
+<section id="modelling-and-forecasting-framework-3" class="slide level2">
+<h2>modelling and forecasting framework</h2>
+<h3 style="color:#1A003F;" id="data-1">data</h3>
+
+<img data-src="index_files/figure-revealjs/data-1.png" width="960" class="r-stretch"></section>
+<section id="modelling-and-forecasting-framework-4" class="slide level2">
 <h2>modelling and forecasting framework</h2>
 <h3 style="color:#1A003F;" id="characterisation">characterisation</h3>
 <ul>
@@ -249,72 +264,6 @@
 <li>inspirations: UN, IPCC, ECB, FED, Christopher Sims</li>
 </ul>
 </section>
-<section id="modelling-and-forecasting-framework-3" class="slide level2">
-<h2>modelling and forecasting framework</h2>
-<h3 style="color:#1A003F;" id="data">data</h3>
-<ul>
-<li>annual country-level time series</li>
-<li><span class="math inline">\(\begin{bmatrix} gdp_{c.t} &amp; UR_{c.t} &amp; EPR_{c.t} &amp; LFPR_{c.t} \end{bmatrix}\)</span></li>
-<li>sampling period 1991-2024</li>
-<li>189 countries <!-- - 34.4% missing observations --></li>
-</ul>
-</section>
-<section id="modelling-and-forecasting-framework-4" class="slide level2">
-<h2>modelling and forecasting framework</h2>
-<h3 style="color:#1A003F;" id="data-1">data</h3>
-
-<!-- ## modelling and forecasting framework -->
-<!-- ### missing data {style="color:#1A003F;"} -->
-<!-- ```{r} -->
-<!-- #| label: missingdata -->
-<!-- #| cache: true -->
-<!-- #| warning: false -->
-<!-- #| message: false -->
-<!-- #| echo: false -->
-<!-- par( -->
-<!--   mfrow = c(2, 2), -->
-<!--   mar = c(0.5, 0.5, 0.5, 0.5), -->
-<!--   oma = c(2, 2, 2, 2) -->
-<!-- ) -->
-<!-- for (n in 1:4) { -->
-<!--   range_i = range(sapply(1:C, \(i)(range(ilo_dynamic_panel[[i]][,n])))) -->
-<!--   plot.ts( -->
-<!--     ilo_dynamic_panel_missing[[id_usa]][,n],  -->
-<!--     ylim = range_i,  -->
-<!--     col = ligh,  -->
-<!--     lwd = 0.2, -->
-<!--     axes = FALSE, -->
-<!--     ylab = "", -->
-<!--     xlab = "" -->
-<!--   ) -->
-<!--   for (i in (1:C)[-id_usa]) {lines(ilo_dynamic_panel_missing[[i]][,n], col = ligh, lwd = 0.2)} -->
-<!--   lines(ilo_dynamic_panel_missing[[id_pol]][,n], col = dark, lwd = 2) -->
-<!--   if (n == 1) { -->
-<!--     text( -->
-<!--       time_id[4], -->
-<!--       ilo_dynamic_panel[[id_pol]][34,n], -->
-<!--       "COL", -->
-<!--       col = dark, -->
-<!--       cex = 2 -->
-<!--     ) -->
-<!--   } -->
-<!--   text( -->
-<!--     time_id[31], -->
-<!--     range_i[2] - 0.1 * diff(range_i), -->
-<!--     var_names[n], -->
-<!--     col = dark, -->
-<!--     cex = 2 -->
-<!--   ) -->
-<!--   if (n == 3 || n == 4) { -->
-<!--     axis( -->
-<!--       1, -->
-<!--       labels = c(NA, seq(from = 1995, to = 2020, by = 5), NA), -->
-<!--       at = c(1991, seq(from = 1995, to = 2020, by = 5), 2024), -->
-<!--     ) -->
-<!--   } -->
-<!-- } -->
-<!-- ``` -->
-<img data-src="index_files/figure-revealjs/data-1.png" width="960" class="r-stretch"></section>
 <section id="modelling-and-forecasting-framework-5" class="slide level2">
 <h2>modelling and forecasting framework</h2>
 <h3 style="color:#1A003F;" id="modelling-features">modelling features</h3>
@@ -355,54 +304,16 @@
         E_\pi\left[\boldsymbol\Sigma_c\right] &amp;= \boldsymbol\Sigma\\
 \end{align}\]</span></p>
 <ul>
-<li>a global model under the prior mean</li>
-</ul>
-<p><span class="math display">\[\begin{align}
-        \mathbf{y}_{c.t} &amp;= \mathbf{A}_{1} \mathbf{y}_{c.t-1} + \mathbf{A}_{d}\mathbf{x}_{c.t} + \boldsymbol\epsilon_{c.t}\\[1ex]
-        \boldsymbol\epsilon_{c.t}\mid \mathbf{y}_{c.t-1} &amp; \sim N_4\left(\mathbf{0}_4, \boldsymbol\Sigma\right)
-\end{align}\]</span></p>
-<ul>
 <li>parameters <span class="math inline">\(\mathbf{A}_{1}\)</span>, <span class="math inline">\(\mathbf{A}_{d}\)</span> and <span class="math inline">\(\boldsymbol\Sigma\)</span> are estimated</li>
 <li>panel data efficiency gains and interpretations</li>
 </ul>
+<!-- - a global model under the prior mean -->
+<!-- \begin{align} -->
+<!--        \mathbf{y}_{c.t} &= \mathbf{A}_{1} \mathbf{y}_{c.t-1} + \mathbf{A}_{d}\mathbf{x}_{c.t} + \boldsymbol\epsilon_{c.t}\\[1ex] -->
+<!--        \boldsymbol\epsilon_{c.t}\mid \mathbf{y}_{c.t-1} & \sim N_4\left(\mathbf{0}_4, \boldsymbol\Sigma\right) -->
+<!-- \end{align} -->
 </section>
 <section id="modelling-and-forecasting-framework-8" class="slide level2">
-<h2>modelling and forecasting framework</h2>
-<h3 style="color:#1A003F;" id="group-modelling">group modelling</h3>
-<ul>
-<li><p>let each country be assigned to a group <span class="math inline">\(g\in\{1,\dots,G\}\)</span></p></li>
-<li><p>country grouping <span class="math display">\[\begin{align}
-      \mathbf{y}_{c.t} &amp;= \mathbf{A}_{g.1} \mathbf{y}_{c.t-1} + \mathbf{A}_{d.g}\mathbf{x}_{c.t} + \boldsymbol\epsilon_{c.t}, \qquad \boldsymbol\epsilon_{c.t}\mid \mathbf{y}_{c.t-1} \sim N_4\left(\mathbf{0}_4, \boldsymbol\Sigma_g\right)\\[2ex]
-\end{align}\]</span></p></li>
-<li><p>global prior grouping</p></li>
-</ul>
-<p><span class="math display">\[\begin{align}
-        E_\pi\left[\mathbf{A}_{c}\right] &amp;= \mathbf{A}_g, \qquad E_\pi\left[\boldsymbol\Sigma_c\right] = \boldsymbol\Sigma_g\\
-\end{align}\]</span></p>
-<ul>
-<li>pre-specified or estimated group membership</li>
-</ul>
-</section>
-<section id="modelling-and-forecasting-framework-9" class="slide level2">
-<h2>modelling and forecasting framework</h2>
-<h3 style="color:#1A003F;" id="featured-models">featured models</h3>
-<ul>
-<li>country-specific VARs with global prior</li>
-<li>country-specific VARs with global prior by <a href="https://doi.org/10.1002/jae.1082">Jarociński (2010, JAE)</a></li>
-<li>country-grouping VARs with global prior (fixed or estimated groupings)</li>
-<li>country-specific VARs with global prior grouping (fixed or estimated groupings)</li>
-<li>country-specific VARs</li>
-</ul>
-<h3 style="color:#1A003F;" id="featured-model-specifications">featured model specifications</h3>
-<ul>
-<li>VAR lag order modification</li>
-<li>exogenous variables</li>
-<li>constrained forecasting of rates</li>
-<li>prior hyper-parameters adjustment</li>
-<li>global prior mean set to pooled estimator by <a href="https://doi.org/10.1016/0304-4076(89)90036-5">Zellner, Hong (1989, JOE)</a></li>
-</ul>
-</section>
-<section id="modelling-and-forecasting-framework-10" class="slide level2">
 <h2>modelling and forecasting framework</h2>
 <h3 style="color:#1A003F;" id="forecasting-features">forecasting features</h3>
 <ul>
@@ -416,7 +327,7 @@
 <li>forecast error variance decomposition</li>
 </ul>
 </section>
-<section id="modelling-and-forecasting-framework-11" class="slide level2">
+<section id="modelling-and-forecasting-framework-9" class="slide level2">
 <h2>modelling and forecasting framework</h2>
 <h3 style="color:#1A003F;" id="one-period-ahead-conditional-predictive-density">one-period-ahead conditional predictive density</h3>
 <p><span class="math display">\[\begin{align}
@@ -427,25 +338,36 @@
 <li>implied by the model</li>
 <li>equivalent to the frequentist predictive density</li>
 </ul>
-<h3 style="color:#1A003F;" id="joint-predictive-density">joint predictive density</h3>
+<h3 style="color:#1A003F;" id="predictive-density">predictive density</h3>
 <p><span class="math display">\[\begin{align}
-        p\left(\mathbf{y}_{c.t+h},\dots,\mathbf{y}_{c.t+1}\mid \mathbf{Y}_{c.t}\right)
-        &amp;= \int p\left(\mathbf{y}_{c.t+h},\dots,\mathbf{y}_{c.t+1},\mathbf{A}_{c},\boldsymbol\Sigma_c\mid \mathbf{Y}_{c.t}\right)d\left(\mathbf{A}_{c},\boldsymbol\Sigma_c\right)
+        p\left(\mathbf{y}_{c.t+1}\mid \mathbf{y}_{c.t}\right)
+        &amp;= \int p\left(\mathbf{y}_{c.t+1}\mid \mathbf{y}_{c.t},\mathbf{A}_{c},\boldsymbol\Sigma_c\right)p\left(\mathbf{A}_{c},\boldsymbol\Sigma_c\mid \mathbf{y}_{c.t}\right)d\left(\mathbf{A}_{c},\boldsymbol\Sigma_c\right)
 \end{align}\]</span></p>
 <ul>
 <li>accounts for parameter uncertainty</li>
 <li>used to generate forecast summaries</li>
 </ul>
-<!-- ## the model -->
-<!-- ### missing observation handling {style="color:#1A003F;"} -->
-<!-- - derived model-coherent joint density of missing observations $\mathbf{y}_{c.m}$ given observed data $\mathbf{y}_{c.o}$ and parameters $\mathbf{A}_{c},\boldsymbol\Sigma_c$ -->
-<!-- \begin{align} -->
-<!--        p\left(\mathbf{y}_{c.m}\mid \mathbf{y}_{c.o},\mathbf{A}_{c},\boldsymbol\Sigma_c\right) -->
-<!-- \end{align} -->
-<!-- - based on model's likelihood function -->
-<!-- - sampled like other parameters during estimation -->
-<!-- - parameter estimation and forecasting embed uncertainty about missing observations -->
 </section>
+<section id="the-model" class="slide level2">
+<h2>the model</h2>
+<h3 style="color:#1A003F;" id="missing-observation-handling">missing observation handling</h3>
+<ul>
+<li>derived model-coherent joint density of missing observations <span class="math inline">\(\mathbf{y}_{c.m}\)</span> given observed data <span class="math inline">\(\mathbf{y}_{c.o}\)</span> and parameters <span class="math inline">\(\mathbf{A}_{c},\boldsymbol\Sigma_c\)</span></li>
+</ul>
+<p><span class="math display">\[\begin{align}
+        p\left(\mathbf{y}_{c.m}\mid \mathbf{y}_{c.o},\mathbf{A}_{c},\boldsymbol\Sigma_c\right)
+\end{align}\]</span></p>
+<ul>
+<li>based on model’s likelihood function</li>
+<li>sampled like other parameters during estimation</li>
+<li>parameter estimation and forecasting embed uncertainty about missing observations</li>
+</ul>
+</section>
+<section id="modelling-and-forecasting-framework-10" class="slide level2">
+<h2>modelling and forecasting framework</h2>
+<h3 style="color:#1A003F;" id="missing-data">missing data</h3>
+
+<img data-src="index_files/figure-revealjs/missingdata-1.png" width="960" class="r-stretch"></section>
 <section id="the-r-package-bpvars-1" class="slide level2" data-background-color="#1614B1">
 <h2>the R package <a href="https://bsvars.org/bpvars">bpvars</a></h2>
 </section>
@@ -472,38 +394,42 @@
 </section>
 <section id="the-r-package-bpvars-3" class="slide level2">
 <h2>the R package <a href="https://bsvars.org/bpvars">bpvars</a></h2>
-<p><img data-src="cran.png" class="absolute" style="top: 100px; right: 250px; width: 600px; "></p>
+<p><img data-src="cran.png" class="absolute" style="top: 100px; right: 150px; width: 800px; "></p>
 </section>
 <section id="the-r-package-bpvars-4" class="slide level2">
+<h2>the R package <a href="https://bsvars.org/bpvars">bpvars</a></h2>
+<p><img data-src="vignette.png" class="absolute" style="top: 100px; right: 150px; width: 600px; "></p>
+</section>
+<section id="the-r-package-bpvars-5" class="slide level2">
 <h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
 <h3 style="color:#1A003F;" id="inspect-the-data">inspect the data</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">library</span>(bpvars)                                   <span class="co"># load the package</span></span>
-<span id="cb3-2"><a href=""></a><span class="fu">tail</span>(ilo_dynamic_panel<span class="sc">$</span>COL, <span class="dv">8</span>)                    <span class="co"># inspect Colombian data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-2"><a href=""></a><span class="fu">tail</span>(ilo_dynamic_panel<span class="sc">$</span>GHA, <span class="dv">8</span>)                    <span class="co"># inspect Ghanian data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time Series:
 Start = 2017 
 End = 2024 
 Frequency = 1 
-          gdp     UR     EPR    LFPR
-2017 26.43928  9.086 60.0148 66.0127
-2018 26.46460  9.360 59.1306 65.2368
-2019 26.49597 10.280 57.7094 64.3217
-2020 26.42140 15.983 53.2794 63.4150
-2021 26.52396 13.898 55.3892 64.3298
-2022 26.59468 10.541 56.4978 63.1550
-2023 26.60178  9.591 57.6234 63.7363
-2024 26.61907  9.619 57.4175 63.5283</code></pre>
+          gdp   UR      EPR LFPR
+2017 24.73604 3.37 64.60284 66.9
+2018 24.79571 3.20 63.19104 65.3
+2019 24.85843 3.07 61.75763 63.7
+2020 24.86322 3.18 59.65647 61.6
+2021 24.91292 3.20 58.45631 60.4
+2022 24.95010 2.87 57.40441 59.1
+2023 24.98171 2.83 57.39665 59.1
+2024 25.03675 2.82 57.39092 59.1</code></pre>
 </div>
 </div>
 </section>
-<section id="the-r-package-bpvars-5" class="slide level2">
+<section id="the-r-package-bpvars-6" class="slide level2">
 <h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
 <h3 style="color:#1A003F;" id="specify-and-estimate-the-model">specify and estimate the model</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>spec <span class="ot">=</span> specify_bvarPANEL<span class="sc">$</span><span class="fu">new</span>(                           <span class="co"># specify the model</span></span>
-<span id="cb5-2"><a href=""></a>  ilo_dynamic_panel,                                    <span class="co"># data</span></span>
-<span id="cb5-3"><a href=""></a>  <span class="at">exogenous =</span> ilo_exogenous_variables                   <span class="co"># exogenous variables</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>spec <span class="ot">=</span> specify_bvarPANEL<span class="sc">$</span><span class="fu">new</span>(                          <span class="co"># specify the model</span></span>
+<span id="cb5-2"><a href=""></a>  ilo_dynamic_panel,                                   <span class="co"># data</span></span>
+<span id="cb5-3"><a href=""></a>  <span class="at">exogenous =</span> ilo_exogenous_variables                  <span class="co"># exogenous variables</span></span>
 <span id="cb5-4"><a href=""></a>)</span>
 <span id="cb5-5"><a href=""></a></span>
 <span id="cb5-6"><a href=""></a>burn <span class="ot">=</span> <span class="fu">estimate</span>(spec, <span class="at">S =</span> <span class="dv">5000</span>, <span class="at">show_progress =</span> <span class="cn">FALSE</span>) <span class="co"># run the burn-in</span></span>
@@ -519,24 +445,24 @@ bpvars: Forecasting with Bayesian Panel VARs      |
 </div>
 </div>
 </section>
-<section id="the-r-package-bpvars-6" class="slide level2">
+<section id="the-r-package-bpvars-7" class="slide level2">
 <h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
 <h3 style="color:#1A003F;" id="forecast-labour-market-outcomes">forecast labour market outcomes</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>fore <span class="ot">=</span> <span class="fu">forecast</span>(                                    <span class="co"># forecast the model</span></span>
 <span id="cb7-2"><a href=""></a>  post,                                             <span class="co"># estimation output</span></span>
-<span id="cb7-3"><a href=""></a>  <span class="at">horizon =</span> <span class="dv">5</span>,                                      <span class="co"># forecast horizon</span></span>
+<span id="cb7-3"><a href=""></a>  <span class="at">horizon =</span> <span class="dv">3</span>,                                      <span class="co"># forecast horizon</span></span>
 <span id="cb7-4"><a href=""></a>  <span class="at">exogenous_forecast =</span> ilo_exogenous_forecasts,     <span class="co"># forecasts for exogenous variables</span></span>
 <span id="cb7-5"><a href=""></a>) </span>
-<span id="cb7-6"><a href=""></a><span class="fu">plot</span>(fore, <span class="st">"COL"</span>, <span class="at">main =</span> <span class="st">"Forecasts for Colombia"</span>)  <span class="co"># plot the forecasts</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-6"><a href=""></a><span class="fu">plot</span>(fore, <span class="st">"GHA"</span>, <span class="at">main =</span> <span class="st">"Forecasts for Ghana"</span>)     <span class="co"># plot the forecasts</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/for-1.png" width="960" class="r-stretch"></section>
-<section id="the-r-package-bpvars-7" class="slide level2">
+<section id="the-r-package-bpvars-8" class="slide level2">
 <h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
 <h3 style="color:#1A003F;" id="report-the-forecasts">report the forecasts</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>summ <span class="ot">=</span> <span class="fu">summary</span>(fore, <span class="st">"COL"</span>)                       <span class="co"># compute forecast summaries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>summ <span class="ot">=</span> <span class="fu">summary</span>(fore, <span class="st">"GHA"</span>)                       <span class="co"># compute forecast summaries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> **************************************************|
  bsvars: Bayesian Structural Vector Autoregressions|
@@ -546,119 +472,99 @@ bpvars: Forecasting with Bayesian Panel VARs      |
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>summ<span class="sc">$</span>variable2                                    <span class="co"># report forecasts for UR</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      mean       sd 5% quantile 95% quantile
-1 8.973474 1.747242   6.1337811     11.87172
-2 8.441901 2.382514   4.5622894     12.39060
-3 8.032808 2.910939   3.2775874     12.71294
-4 7.617333 3.377959   2.0246760     13.00899
-5 7.303411 3.823682   0.8388716     13.26242</code></pre>
+<pre><code>      mean        sd 5% quantile 95% quantile
+1 2.551846 0.9990947  0.94483619     4.202418
+2 2.291787 1.4024042  0.04532671     4.621018
+3 2.065867 1.6966899 -0.68005895     4.855773</code></pre>
 </div>
 </div>
 </section>
-<section id="the-r-package-bpvars-8" class="slide level2">
+<section id="the-r-package-bpvars-9" class="slide level2">
 <h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
 <h3 style="color:#1A003F;" id="forecast-error-variance-decomposition">forecast error variance decomposition</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>post <span class="sc">|&gt;</span>                                              <span class="co"># estimation output</span></span>
 <span id="cb12-2"><a href=""></a>  <span class="fu">compute_variance_decompositions</span>(<span class="at">horizon =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span>    <span class="co"># compute variance decompositions</span></span>
-<span id="cb12-3"><a href=""></a>  <span class="fu">plot</span>(<span class="at">which_c =</span> <span class="st">"COL"</span>)                              <span class="co"># plot variance decompositions </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-3"><a href=""></a>  <span class="fu">plot</span>(<span class="at">which_c =</span> <span class="st">"GHA"</span>)                              <span class="co"># plot variance decompositions </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/fevd-1.png" width="960" class="r-stretch"></section>
-<section id="the-r-package-bpvars-9" class="slide level2">
-<h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
-<h3 style="color:#1A003F;" id="forecast-performance-evaluation">forecast performance evaluation</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Benchmark model</span></span>
-<span id="cb13-2"><a href=""></a>spec <span class="ot">=</span> specify_bvarPANEL<span class="sc">$</span><span class="fu">new</span>(ilo_dynamic_panel)   <span class="co"># specify the model</span></span>
-<span id="cb13-3"><a href=""></a>poos <span class="ot">=</span> specify_poosf_exercise<span class="sc">$</span><span class="fu">new</span>(                <span class="co"># specify forecasting exercise</span></span>
-<span id="cb13-4"><a href=""></a>          spec,</span>
-<span id="cb13-5"><a href=""></a>          <span class="at">S =</span> <span class="dv">1000</span>,</span>
-<span id="cb13-6"><a href=""></a>          <span class="at">S_burn =</span> <span class="dv">1000</span>,</span>
-<span id="cb13-7"><a href=""></a>          <span class="at">horizons =</span> <span class="dv">1</span>,</span>
-<span id="cb13-8"><a href=""></a>          <span class="at">training_sample =</span> <span class="dv">30</span></span>
-<span id="cb13-9"><a href=""></a>)</span>
-<span id="cb13-10"><a href=""></a>fore <span class="ot">=</span> <span class="fu">forecast_poos_recursively</span>(spec, poos)      <span class="co"># run the forecasting exercise </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>**************************************************|
- bpvars: Forecasting with Bayesian Panel VARs     |
-**************************************************|
- Recursive pseudo-out-of-sample forecasting using
-         expanding window samples.
- Press Esc to interrupt the computations
-**************************************************|
- Step 1: Estimate a model for a full sample to get
-         starting values for subsequent steps.
- Step 2: Recursive pseudo out-of-sample
-         forecasting performed for 4 samples.
-**************************************************|</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>fper <span class="ot">=</span> <span class="fu">compute_forecast_performance</span>(fore)         <span class="co"># compute performance metrics </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
 <section id="the-r-package-bpvars-10" class="slide level2">
 <h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
-<h3 style="color:#1A003F;" id="forecast-performance-evaluation-1">forecast performance evaluation</h3>
+<h3 style="color:#1A003F;" id="specify-a-model-with-rates-restrictions">specify a model with rates restrictions</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Model with country-grouping</span></span>
-<span id="cb16-2"><a href=""></a>spec_g <span class="ot">=</span> specify_bvarGroupPANEL<span class="sc">$</span><span class="fu">new</span>(                <span class="co"># specify the model</span></span>
-<span id="cb16-3"><a href=""></a>          ilo_dynamic_panel,</span>
-<span id="cb16-4"><a href=""></a>          <span class="at">group_allocation =</span> country_grouping_region</span>
-<span id="cb16-5"><a href=""></a>)</span>
-<span id="cb16-6"><a href=""></a>poos_g <span class="ot">=</span> specify_poosf_exercise<span class="sc">$</span><span class="fu">new</span>(                <span class="co"># specify forecasting exercise</span></span>
-<span id="cb16-7"><a href=""></a>          spec_g,</span>
-<span id="cb16-8"><a href=""></a>          <span class="at">S =</span> <span class="dv">1000</span>,</span>
-<span id="cb16-9"><a href=""></a>          <span class="at">S_burn =</span> <span class="dv">1000</span>,</span>
-<span id="cb16-10"><a href=""></a>          <span class="at">horizons =</span> <span class="dv">1</span>,</span>
-<span id="cb16-11"><a href=""></a>          <span class="at">training_sample =</span> <span class="dv">30</span></span>
-<span id="cb16-12"><a href=""></a>)</span>
-<span id="cb16-13"><a href=""></a>fore_g <span class="ot">=</span> <span class="fu">forecast_poos_recursively</span>(spec_g, poos_g)  <span class="co"># run the forecasting exercise </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>specr <span class="ot">=</span> specify_bvarPANEL<span class="sc">$</span><span class="fu">new</span>(                           <span class="co"># specify the model</span></span>
+<span id="cb13-2"><a href=""></a>  ilo_dynamic_panel,                                     <span class="co"># data</span></span>
+<span id="cb13-3"><a href=""></a>  <span class="at">exogenous =</span> ilo_exogenous_variables,                   <span class="co"># exogenous variables</span></span>
+<span id="cb13-4"><a href=""></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"real"</span>,<span class="st">"rate"</span>,<span class="st">"rate"</span>,<span class="st">"rate"</span>)                  <span class="co"># set variable type</span></span>
+<span id="cb13-5"><a href=""></a>)</span>
+<span id="cb13-6"><a href=""></a></span>
+<span id="cb13-7"><a href=""></a>burnr <span class="ot">=</span> <span class="fu">estimate</span>(specr, <span class="at">S =</span> <span class="dv">5000</span>, <span class="at">show_progress =</span> <span class="cn">FALSE</span>) <span class="co"># run the burn-in</span></span>
+<span id="cb13-8"><a href=""></a>postr <span class="ot">=</span> <span class="fu">estimate</span>(burnr, <span class="at">S =</span> <span class="dv">5000</span>)                        <span class="co"># estimate the model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>**************************************************|
- bpvars: Forecasting with Bayesian Panel VARs     |
+bpvars: Forecasting with Bayesian Panel VARs      |
 **************************************************|
- Recursive pseudo-out-of-sample forecasting using
-         expanding window samples.
+ Progress of the MCMC simulation for 5000 draws
+    Every draw is saved via MCMC thinning
  Press Esc to interrupt the computations
-**************************************************|
- Step 1: Estimate a model for a full sample to get
-         starting values for subsequent steps.
- Step 2: Recursive pseudo out-of-sample
-         forecasting performed for 4 samples.
 **************************************************|</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>fper_g <span class="ot">=</span> <span class="fu">compute_forecast_performance</span>(fore_g)       <span class="co"># compute performance metrics </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="the-r-package-bpvars-11" class="slide level2">
 <h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
-<h3 style="color:#1A003F;" id="forecast-performance-evaluation-2">forecast performance evaluation</h3>
+<h3 style="color:#1A003F;" id="forecast-with-restrictions">forecast with restrictions</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># density forecast performance comparison</span></span>
-<span id="cb19-2"><a href=""></a><span class="fu">cbind</span>(fper<span class="sc">$</span>PLS<span class="sc">$</span>Global, fper_g<span class="sc">$</span>PLS<span class="sc">$</span>Global)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>               1           1
-gdp    2.0029142  1.38461653
-UR    -0.3189408 -1.11473429
-EPR   -0.7699760 -2.23051976
-LFPR  -0.4199861 -2.26197923
-joint  5.3925000 -0.07476067</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>forer <span class="ot">=</span> <span class="fu">forecast</span>(                                   <span class="co"># forecast the model</span></span>
+<span id="cb15-2"><a href=""></a>  postr,                                            <span class="co"># estimation output</span></span>
+<span id="cb15-3"><a href=""></a>  <span class="at">horizon =</span> <span class="dv">3</span>,                                      <span class="co"># forecast horizon</span></span>
+<span id="cb15-4"><a href=""></a>  <span class="at">exogenous_forecast =</span> ilo_exogenous_forecasts,     <span class="co"># forecasts for exogenous variables</span></span>
+<span id="cb15-5"><a href=""></a>) </span>
+<span id="cb15-6"><a href=""></a><span class="fu">plot</span>(forer, <span class="st">"GHA"</span>, <span class="at">main =</span> <span class="st">"Forecasts for Ghana"</span>)    <span class="co"># plot the forecasts</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># point forecast performance comparison</span></span>
-<span id="cb21-2"><a href=""></a><span class="fu">cbind</span>(fper<span class="sc">$</span>RMSFE<span class="sc">$</span>Global, fper_g<span class="sc">$</span>RMSFE<span class="sc">$</span>Global)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<img data-src="index_files/figure-revealjs/forr-1.png" width="960" class="r-stretch"></section>
+<section id="the-r-package-bpvars-12" class="slide level2">
+<h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
+<h3 style="color:#1A003F;" id="specify-a-model-with-missing-data">specify a model with missing data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>specm <span class="ot">=</span> specify_bvarPANEL<span class="sc">$</span><span class="fu">new</span>(                           <span class="co"># specify the model</span></span>
+<span id="cb16-2"><a href=""></a>  ilo_dynamic_panel_missing                              <span class="co"># data with missing observations</span></span>
+<span id="cb16-3"><a href=""></a>)</span>
+<span id="cb16-4"><a href=""></a></span>
+<span id="cb16-5"><a href=""></a>burnm <span class="ot">=</span> <span class="fu">estimate</span>(specm, <span class="at">S =</span> <span class="dv">5000</span>, <span class="at">show_progress =</span> <span class="cn">FALSE</span>) <span class="co"># run the burn-in</span></span>
+<span id="cb16-6"><a href=""></a>postm <span class="ot">=</span> <span class="fu">estimate</span>(burnm, <span class="at">S =</span> <span class="dv">5000</span>)                        <span class="co"># estimate the model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>               1          1
-gdp   0.04835066 0.06344612
-UR    0.66996438 0.37080192
-EPR   0.95221640 3.02070408
-LFPR  0.83349208 3.37976098
-joint 0.71634754 2.27425575</code></pre>
+<pre><code>**************************************************|
+bpvars: Forecasting with Bayesian Panel VARs      |
+**************************************************|
+ Progress of the MCMC simulation for 5000 draws
+    Every draw is saved via MCMC thinning
+ Press Esc to interrupt the computations
+**************************************************|</code></pre>
 </div>
 </div>
 </section>
+<section id="the-r-package-bpvars-13" class="slide level2">
+<h2>the R package <a href="https://github.com/bsvars/bpvars">bpvars</a></h2>
+<h3 style="color:#1A003F;" id="forecast-with-missing-data">forecast with missing data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>forem <span class="ot">=</span> <span class="fu">forecast</span>(                                   <span class="co"># forecast the model</span></span>
+<span id="cb18-2"><a href=""></a>  postm,                                            <span class="co"># estimation output</span></span>
+<span id="cb18-3"><a href=""></a>  <span class="at">horizon =</span> <span class="dv">3</span>                                       <span class="co"># forecast horizon</span></span>
+<span id="cb18-4"><a href=""></a>) </span>
+<span id="cb18-5"><a href=""></a><span class="fu">plot</span>(forem, <span class="st">"GHA"</span>, <span class="at">main =</span> <span class="st">"Forecasts for Ghana"</span>)    <span class="co"># plot the forecasts</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/form-1.png" width="960" class="r-stretch"></section>
 <section id="section-2" class="slide level2" data-background-color="#1614B1">
 <h2></h2>
 <p><img data-src="social_ilo.png" class="absolute" style="top: 80px; right: 50px; width: 900px; "></p>
+</section>
+<section id="section-3" class="slide level2" data-background-color="#1614B1">
+<h2></h2>
+<p><img data-src="bpvars_social.png" class="absolute" style="top: 60px; right: 50px; width: 900px; "></p>
 
 </section>
     </div>
