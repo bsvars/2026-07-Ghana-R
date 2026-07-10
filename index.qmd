@@ -118,6 +118,7 @@ $$ $$
 - $\begin{bmatrix} gdp_{c.t} & UR_{c.t} & EPR_{c.t} & LFPR_{c.t} \end{bmatrix}$
 - sampling period 1991-2024
 - 189 countries
+- illustrations for Ghana, ISO code: `GHA`
 <!-- - 34.4% missing observations -->
 
 
@@ -640,6 +641,6 @@ plot(forem, "GHA", main = "Forecasts for Ghana")    # plot the forecasts
 
 ##  {background-color="#1614B1"}
 
-![](bpvars_social.png){.absolute top=60 right=50 width="900"}
+![](bpvars_social.png){.absolute top=40 right=50 width="900"}
 
 
